@@ -9,28 +9,29 @@
 {% for post in posts %}
 <div class="card" style="width: 18rem;">
   {% if post.image %}
-    <img src='{{post.image.url}}' class="card-img-top" alt="...">
-    {% else %}
+    <img src="{{ post.image.url }}" class="card-img-top" alt="...">
+  {% else %}
     <img src="/static/place_holder.jpg" class="card-img-top" alt="...">
-    {% endif %}
-    <div class="card-body">
-      <h5 class="card-title">{{post.title}}</h5>
-      <p class="card-text">{{post.content}}</p>
-      <a href="/post_detail/{{post.id}}/" class="card-link">more details</a>
-    </div>
+  {% endif %}
+  <div class="card-body">
+    <h5 class="card-title">{{ post.title }}</h5>
+    <p class="card-text">{{ post.content }}</p>
+    <a href="/post_detail/{{ post.id }}/" class="card-link">more details</a>
   </div>
+</div>
 {% endfor %}
-<div style="display": flex; justify-content: center; margin-top: 20px; margin-bottom: 20px >
+
+<div style="display: flex; justify-content: center; margin-top: 20px; margin-bottom: 20px;">
   {% for i in max_pages %}
     {% if request.GET %}
-  <a><class="btn btn primary" href="{{request.get_full_path}}&page={{i}}">{{ i }}</a>
-  {% else %}
-    <a href="/posts/?page={{i}}" class="btn btn-primary">
-        {{i}}
-</a> 
-{%endif%}
+      <a href=""></a>
+      <a href="{{ request.get_full_path }}&page={{ i }}" class="btn btn-primary">{{ i }}</a>
+    {% else %}
+      <a href=""></a>
+      <a href="/posts/?page={{ i }}" class="btn btn-primary">{{ i }}</a>
+    {% endif %}
   {% endfor %}
-
-  
 </div>
+
+
 {% endblock %}

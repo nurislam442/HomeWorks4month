@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from posts.models import Post
-from posts.forms import Post_Form, SearchForm
+from posts.forms import Post_Form, SearchForm, PostUpdateForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 # Create your views here.
@@ -62,10 +62,25 @@ def create_post(request):
             rate = form.cleaned_data["rate"]
             image = form.cleaned_data["image"]
             post = Post.objects.create(title=title, content=content, rate=rate, image=image)
-            return redirect("/list_view/")
+            return redirect("/posts/")
             
         # data = request.POST
         # image = request.FILES.get("image")
         # title = data.get("title")
         # content = data.get("content")
         # rate = data.get("rate")
+@login_required(login_url="login-view")
+def post_update(request, id):
+    post = Post.objects.get(id=id, autor=request.user).first()
+    if not post:
+        return HttpResponse("you don't have permission to update this post or post does not exist")
+    if request.method == "GET":
+        form = PostUpdateForm(instance=post)
+        return render(request, "posts/post_update.html", context = {"form":form})
+    if request.method == "POST":
+        form = PostUpdateForm(request.POST, request.FILES, instance=post)
+        if not form.is_valid:
+            return render(request, "posts/post_update.html", context = {"form":form})
+        elif form.is_valid:
+            form.save()
+            return redirect(f"/post/{post.id}/")

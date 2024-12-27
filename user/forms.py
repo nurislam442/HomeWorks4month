@@ -3,9 +3,11 @@ from django.contrib.auth.models import User
 
 class Registerform(forms.ModelForm):
     password_confirm = forms.CharField(required=True)
+    age = forms.IntegerField()
+    image = forms.ImageField()
     class Meta:
         model = User
-        fields = ["username", "password", "password_confirm"]
+        fields = ["image", "username", "age", "password", "password_confirm"]
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get("password")

@@ -23,8 +23,11 @@
     <h5>Оценка: {{ post.rate }}</h5>
     <h5>Создано: {{ post.create_at }}</h5>
     <h5>Обновлено: {{ post.update_at }}</h5>
+    {%if request.user == post.autor%}
+    <a href="/posts/{{post.id}}/update/" class="btn btn-primary">Update Post</a>
+    {%endif%}
     <h5>
-    <a href="/list_view/">Назад</a>
+    <a href="/posts/">Назад</a>
     </h5>
     </div>
 </body>

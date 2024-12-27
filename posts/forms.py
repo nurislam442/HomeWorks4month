@@ -1,5 +1,5 @@
 from django import forms
-from posts.models import Category
+from posts.models import Category, Post
 
 class Post_Form(forms.Form):
     image =forms.ImageField()
@@ -43,3 +43,8 @@ class SearchForm(forms.Form):
     ordering = forms.ChoiceField(
         choices=orderings, required=False,
         widget=forms.Select(attrs={"class": "form-control"}))
+
+class PostUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ["title", "content", "image"]
